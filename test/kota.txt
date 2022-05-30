@@ -1,0 +1,17 @@
+NODE:
+surabaya
+bandung
+jakarta
+solo
+kediri
+semarang
+
+EDGE:
+surabaya bandung 7
+surabaya jakarta 12
+bandung solo 9
+bandung jakarta 2
+jakarta kediri 10
+kediri solo 4
+kediri semarang 5
+solo semarang 1
