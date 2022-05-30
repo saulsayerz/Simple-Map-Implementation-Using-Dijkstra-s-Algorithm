@@ -5,6 +5,7 @@
 # FILE INI MERUPAKAN FILE UNTUK CLASS GRAPH
 
 import os.path
+import time
 from queue import PriorityQueue
 
 class Graph:
@@ -12,6 +13,8 @@ class Graph:
         self.Nodes = []
         self.Edges = {}
         self.Solution = []
+        self.Iterations = 0
+        self.ExecTime = 0
 
     def readFile(self):
         """ This method is used to fill the Nodes
@@ -47,6 +50,8 @@ class Graph:
         """ This method is used to find the shortest path
         from start to end using djiktra algorithm.
         """
+        waktuawal = time.time()
+        self.Iterations = 0
         visited = [] # List of visited nodes
         shortest = {} # Dictionary of shortest path and the node to get it
         for node in self.Nodes:
@@ -59,6 +64,7 @@ class Graph:
         while not queue.empty() : # Loop until the queue is empty
             currentnode = queue.get()[1]
             visited.append(currentnode)
+            self.Iterations = self.Iterations + 1
 
             for edge in self.Edges[currentnode]: # Loop through all the edges of the current node
                 if edge[0] not in visited: 
@@ -66,14 +72,15 @@ class Graph:
                         shortest[edge[0]] = [shortest[currentnode][0] + int(edge[1]), currentnode] # Set the shortest path to the current path + edge weight
                     queue.put((shortest[edge[0]][0], edge[0]))
 
-        print(shortest)
-
         if shortest[end][0] == -1:
             self.Solution = []
         else :
             self.Solution = [end]
             while shortest[self.Solution[0]][1] != '-':
                 self.Solution.insert(0, shortest[self.Solution[0]][1])
+
+        waktuakhir = time.time()
+        self.ExecTime = waktuakhir - waktuawal
 
 # INI DRIVERNYA
 '''
