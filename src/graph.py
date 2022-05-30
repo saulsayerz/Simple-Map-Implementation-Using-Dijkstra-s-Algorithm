@@ -66,6 +66,8 @@ class Graph:
                         shortest[edge[0]] = [shortest[currentnode][0] + int(edge[1]), currentnode] # Set the shortest path to the current path + edge weight
                     queue.put((shortest[edge[0]][0], edge[0]))
 
+        print(shortest)
+
         if shortest[end][0] == -1:
             self.Solution = []
         else :
@@ -73,9 +75,19 @@ class Graph:
             while shortest[self.Solution[0]][1] != '-':
                 self.Solution.insert(0, shortest[self.Solution[0]][1])
 
+# INI DRIVERNYA
+'''
 graf = Graph()
 graf.readFile()
 graf.Djiktra('surabaya','semarang')
 print("NODES: ", graf.Nodes)
 print("EDGES: ", graf.Edges)
 print("SOLUTION: ", graf.Solution)
+
+print()
+graf.readFile()
+graf.Djiktra('A','F')
+print("NODES: ", graf.Nodes)
+print("EDGES: ", graf.Edges)
+print("SOLUTION: ", graf.Solution)
+'''
