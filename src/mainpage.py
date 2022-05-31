@@ -197,13 +197,13 @@ class MainPage(Frame):
             self.labelpesan.config(text = "TABEL PER STEP TIDAK TERSEDIA")
             return
         for i in range (len(self.graf.visited)+1):
-            teks = "step ke: " + str(i) + "\n\n"
+            teks = "iterasi ke: " + str(i) + "\n\n"
             if i == 0 :
                 teks += "current Node : " + "None"
-                teks += "\n\n Tabel djiktra: \n\n"
+                teks += "\n\nTabel djiktra: \n\n"
             else:
                 teks += "current Node : " + self.graf.visited[i-1]
-                teks += "\n\n Tabel djiktra: \n\n"
+                teks += "\n\nTabel djiktra: \n\n"
             for key in self.graf.shortesttablestep[i]:
                 teks += key + " : " + str(self.graf.shortesttablestep[i][key]) + "\n"
             self.labelpesan.config(text = teks)
