@@ -20,7 +20,7 @@ D F 5
 A G 7
 G H 1
 H I 3
-A G 11
+B G 11
 A H 20
 C E 2
 H E 1

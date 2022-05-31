@@ -18,6 +18,8 @@ class Graph:
         self.shortesttable = {}
 
     def readFileParameter(self,path):
+        self.Nodes = []
+        self.Edges = {}
         file = open(path)
         mode = 0
         for line in file:
@@ -82,9 +84,10 @@ class Graph:
 
         while not queue.empty() : # Loop until the queue is empty
             currentnode = queue.get()[1]
+            while currentnode in visited and not queue.empty(): # HANDLE KASUS QUEUE MEMASUKKAN KEY YANG PERSIS
+                currentnode = queue.get()[1] # HARUSNYA VALUE DI UPDATE, TETAPI PRIOQUEUE TIDAK BISA CHANGE VALUE JADI DISKIP AJA YANG KEMBAR
             visited.append(currentnode)
             self.Iterations = self.Iterations + 1
-
             for edge in self.Edges[currentnode]: # Loop through all the edges of the current node
                 if edge[0] not in visited: 
                     if shortest[edge[0]][0] == -1 or shortest[edge[0]][0] > shortest[currentnode][0] + int(edge[1]): # If the shortest path is not found or the current path is shorter than the shortest path
@@ -99,22 +102,5 @@ class Graph:
                 self.Solution.insert(0, shortest[self.Solution[0]][1])
 
         waktuakhir = time.time()
-        self.ExecTime = waktuakhir - waktuawal
+        self.ExecTime = (waktuakhir - waktuawal)*1000
         self.shortesttable = shortest
-
-# INI DRIVERNYA
-'''
-graf = Graph()
-graf.readFile()
-graf.Djiktra('surabaya','semarang')
-print("NODES: ", graf.Nodes)
-print("EDGES: ", graf.Edges)
-print("SOLUTION: ", graf.Solution)
-
-print()
-graf.readFile()
-graf.Djiktra('A','F')
-print("NODES: ", graf.Nodes)
-print("EDGES: ", graf.Edges)
-print("SOLUTION: ", graf.Solution)
-'''

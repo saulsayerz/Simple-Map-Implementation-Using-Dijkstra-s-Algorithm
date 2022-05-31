@@ -67,13 +67,13 @@ class MainPage(Frame):
 
         self.solusi = self.canvas.create_text(
             663.0, 460.5,
-            text = "x1",
+            text = "",
             fill = "#000000",
             font = ("RobotoRoman-Regular", int(19.0)))
 
         self.step = self.canvas.create_text(
             435.0, 415.5,
-            text = "x2",
+            text = "",
             fill = "#000000",
             font = ("RobotoRoman-Regular", int(19.0)))
 
@@ -97,19 +97,19 @@ class MainPage(Frame):
 
         self.cost = self.canvas.create_text(
             580.0, 415.5,
-            text = "x3",
+            text = "",
             fill = "#000000",
             font = ("RobotoRoman-Regular", int(19.0)))
 
         self.iteration = self.canvas.create_text(
             519.0, 516.5,
-            text = "x4",
+            text = "",
             fill = "#000000",
             font = ("RobotoRoman-Regular", int(19.0)))
 
         self.time = self.canvas.create_text(
-            840.0, 516.5,
-            text = "x5",
+            850.0, 512.5,
+            text = "",
             fill = "#000000",
             font = ("RobotoRoman-Regular", int(19.0)))
 
@@ -154,10 +154,10 @@ class MainPage(Frame):
         for key in self.graf.Edges:
             for value in self.graf.Edges[key]:
                 self.G.add_edge(key,value[0],color="black", weight=value[1])
-        pos = nx.spring_layout(self.G)
+        pos = nx.spring_layout(self.G,seed = 500)
         nx.draw(self.G,pos,with_labels=True,connectionstyle=f'arc3, rad = {0.1}')
         labels = nx.get_edge_attributes(self.G,'weight')
-        nx.draw_networkx_edge_labels(self.G, pos, edge_labels=labels, label_pos=0.3, font_size=7)
+        nx.draw_networkx_edge_labels(self.G, pos, edge_labels=labels, label_pos=0.5, font_size=7)
         
         fig = plt.figure(plt.get_fignums()[0])
         fig.set_size_inches(6.5, 3)
@@ -204,7 +204,6 @@ class MainPage(Frame):
                     solusi += " -> "
                 self.canvas.itemconfig(self.solusi, text=solusi)
                 plt.clf()
-                temp = []
                 if i > 0 : 
                     for key in self.graf.Edges:
                         for value in self.graf.Edges[key]:
@@ -218,9 +217,8 @@ class MainPage(Frame):
                             self.G.add_edge(key,value[0],color='black',weight=value[1])
                 edges = self.G.edges()
                 colors = [self.G[u][v]['color'] for u,v in edges]
-                weights = [self.G[u][v]['weight'] for u,v in edges]
 
-                pos = nx.spring_layout(self.G)
+                pos = nx.spring_layout(self.G,seed = 500)
                 nx.draw(self.G,pos,with_labels=True,connectionstyle=f'arc3, rad = {0.1}', edge_color=colors)
                 
                 labels = nx.get_edge_attributes(self.G,'weight')
@@ -238,6 +236,6 @@ class MainPage(Frame):
                 plt.close()
 
                 self.waithere()
-        self.canvas.itemconfig(self.time, text= str(self.graf.ExecTime) + " s")
+        self.canvas.itemconfig(self.time, text= "{:.3f}".format(self.graf.ExecTime) + " ms")
         self.canvas.itemconfig(self.iteration, text=self.graf.Iterations)
 
