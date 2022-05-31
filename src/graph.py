@@ -16,6 +16,8 @@ class Graph:
         self.Iterations = 0
         self.ExecTime = 0
         self.shortesttable = {}
+        self.shortesttablestep=[]
+        self.visited = []
 
     def readFileParameter(self,path):
         self.Nodes = []
@@ -71,6 +73,8 @@ class Graph:
         """ This method is used to find the shortest path
         from start to end using djiktra algorithm.
         """
+        self.shortesttablestep=[]
+        self.visited = []
         waktuawal = time.time()
         self.Iterations = 0
         visited = [] # List of visited nodes
@@ -81,11 +85,14 @@ class Graph:
 
         queue = PriorityQueue()
         queue.put((0,start)) # Put the start node into the queue
+        self.shortesttablestep.append(shortest.copy())
 
         while not queue.empty() : # Loop until the queue is empty
             currentnode = queue.get()[1]
             while currentnode in visited and not queue.empty(): # HANDLE KASUS QUEUE MEMASUKKAN KEY YANG PERSIS
                 currentnode = queue.get()[1] # HARUSNYA VALUE DI UPDATE, TETAPI PRIOQUEUE TIDAK BISA CHANGE VALUE JADI DISKIP AJA YANG KEMBAR
+            if currentnode in visited :
+                break
             visited.append(currentnode)
             self.Iterations = self.Iterations + 1
             for edge in self.Edges[currentnode]: # Loop through all the edges of the current node
@@ -93,6 +100,7 @@ class Graph:
                     if shortest[edge[0]][0] == -1 or shortest[edge[0]][0] > shortest[currentnode][0] + int(edge[1]): # If the shortest path is not found or the current path is shorter than the shortest path
                         shortest[edge[0]] = [shortest[currentnode][0] + int(edge[1]), currentnode] # Set the shortest path to the current path + edge weight
                     queue.put((shortest[edge[0]][0], edge[0]))
+            self.shortesttablestep.append(shortest.copy())
 
         if shortest[end][0] == -1:
             self.Solution = []
@@ -104,3 +112,4 @@ class Graph:
         waktuakhir = time.time()
         self.ExecTime = (waktuakhir - waktuawal)*1000
         self.shortesttable = shortest
+        self.visited = visited

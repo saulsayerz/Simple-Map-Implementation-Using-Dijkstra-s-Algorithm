@@ -145,6 +145,17 @@ class MainPage(Frame):
             width = 87,
             height = 32)
 
+        b3 = Button(
+            text = "Table",
+            command =  lambda:
+            [   self.djiktrapopup()
+            ])
+
+        b3.place(
+            x = 650, y = 21,
+            width = 87,
+            height = 32)
+
     def open_file(self):
         plt.clf()
         file_path = askopenfile(mode='r', filetypes=[('Text Files', '*txt')])
@@ -169,10 +180,34 @@ class MainPage(Frame):
         canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
         plt.close()
 
-    def waithere(self):
+    def waithere(self,time):
         var = IntVar()
-        self.after(1500, var.set, 1)
+        self.after(time, var.set, 1)
         self.wait_variable(var)
+
+    def djiktrapopup(self):
+        top= Toplevel(self.controller)
+        width = 350
+        height = len(self.graf.visited)*40+30
+        top.geometry(str(width) + "x" + str(height))
+        top.title("Djiktra Table")
+        self.labelpesan = Label(top, text= "", font=("Roboto", 10))
+        self.labelpesan.pack()
+        if len(self.graf.visited) == 0 :
+            self.labelpesan.config(text = "TABEL PER STEP TIDAK TERSEDIA")
+            return
+        for i in range (len(self.graf.visited)+1):
+            teks = "step ke: " + str(i) + "\n\n"
+            if i == 0 :
+                teks += "current Node : " + "None"
+                teks += "\n\n Tabel djiktra: \n\n"
+            else:
+                teks += "current Node : " + self.graf.visited[i-1]
+                teks += "\n\n Tabel djiktra: \n\n"
+            for key in self.graf.shortesttablestep[i]:
+                teks += key + " : " + str(self.graf.shortesttablestep[i][key]) + "\n"
+            self.labelpesan.config(text = teks)
+            self.waithere(5000)
 
     def solve(self,start,end):
         if (start not in self.graf.Nodes) or (end not in self.graf.Nodes):
@@ -189,6 +224,8 @@ class MainPage(Frame):
             self.canvas.itemconfig(self.cost, text="none")
             return
         solusi = ""
+
+        # BAGIAN MENUNJUKKAN STEP DARI AWAL SAMPE AKHIR
         if len(self.graf.Solution) == 1:
             self.canvas.itemconfig(self.step, text="1")
             self.canvas.itemconfig(self.solusi, text=start)
@@ -235,7 +272,7 @@ class MainPage(Frame):
                 canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
                 plt.close()
 
-                self.waithere()
+                self.waithere(1500)
         self.canvas.itemconfig(self.time, text= "{:.3f}".format(self.graf.ExecTime) + " ms")
         self.canvas.itemconfig(self.iteration, text=self.graf.Iterations)
 
