@@ -15,6 +15,25 @@ class Graph:
         self.Solution = []
         self.Iterations = 0
         self.ExecTime = 0
+        self.shortesttable = {}
+
+    def readFileParameter(self,path):
+        file = open(path)
+        mode = 0
+        for line in file:
+            if "NODE:" in line:
+                mode = 0
+            elif "EDGE:" in line:
+                mode = 1
+                for i in range(len(self.Nodes)):
+                    self.Edges[self.Nodes[i]] = []
+            elif line == "" or line == "\n":
+                pass
+            elif mode == 0:
+                self.Nodes.append(line.strip())
+            elif mode == 1:
+                edge = line.strip().split()
+                self.Edges[edge[0]].append([edge[1],edge[2]])
 
     def readFile(self):
         """ This method is used to fill the Nodes
@@ -81,6 +100,7 @@ class Graph:
 
         waktuakhir = time.time()
         self.ExecTime = waktuakhir - waktuawal
+        self.shortesttable = shortest
 
 # INI DRIVERNYA
 '''

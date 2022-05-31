@@ -35,7 +35,6 @@ class App(tk.Tk):
 
         self.show_frame("MainPage")
 
-
     def show_frame(self, page_name):
         """Method to show a certain page
 
