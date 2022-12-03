@@ -71,8 +71,3 @@ Time Complexity:  `O(E Log V)`
 Space Complexity:  `O(V)`
 ### where, E is the number of edges and V is the number of vertices.
 Kompleksitas hanya untuk benchmark ya
-
-## Catatan Tambahan
-- Jika ada pertanyaan, silahkan LINE ke `@daffa_ananda`
-- Perubahan spesifikasi dapat terjadi sewaktu-waktu dan akan diumumkan di grup LINE
-- Spesifikasi wajib harus selesai sebelum spesifikasi bonus dikerjakan
